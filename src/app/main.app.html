@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MainApplication</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+    <div>
+        <h1>Welcome to Word Game!</h1>
+      
+        <!-- Kullanıcı Kayıt ve Giriş Formu -->
+        <div *ngIf="!isLoggedIn">
+          <h2>Register / Login</h2>
+          <form *ngIf="!isRegistering" (ngSubmit)="login()">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" name="loginUsername" [(ngModel)]="loginUsername" required>
+            
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="loginPassword" [(ngModel)]="loginPassword" required>
+            
+            <button type="submit">Login</button>
+          </form>
+          
+          <form *ngIf="isRegistering" (ngSubmit)="register()">
+            <label for="registerUsername">Username:</label>
+            <input type="text" id="registerUsername" name="registerUsername" [(ngModel)]="registerUser" required>
+            
+            <label for="registerPassword">Password:</label>
+            <input type="password" id="registerPassword" name="registerPassword" [(ngModel)]="registerPassword" required>
+            
+            <button type="submit">Register</button>
+          </form>
+          
+          <button (click)="toggleRegistration()">Switch to {{ isRegistering ? 'Login' : 'Register' }}</button>
+        </div>
+      
+        <!-- Oyun Bileşeni -->
+        <div *ngIf="isLoggedIn">
+          <h2>Let's Play!</h2>
+          <button (click)="startGame()">Start Game</button>
+          
+          <div *ngIf="isGameStarted">
+            <p>Your letter is: {{ currentLetter }}</p>
+            <label for="guessInput">Enter an English word starting with the letter:</label>
+            <input type="text" id="guessInput" name="guessInput" [(ngModel)]="userGuess" required>
+            <button (click)="makeGuess()">Make Guess</button>
+          </div>
+      
+          <div *ngIf="isGameOver">
+            <p>Game Over! Your score is: {{ score }}</p>
+          </div>
+        </div>
+      </div>
+
+  
+    
+</body>
+</html>
